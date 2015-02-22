@@ -4383,4 +4383,10 @@ config MUIC_RESET_PIN_ENABLE
         help 
                 This request is from H/W team
 		In case of mUIC voltage drop, mUIC will be reset
+		
+config PVS_LEVEL_INTERFACE
+	bool "Expose PVS level information in sys fs (Boeffla-Kernel)"
+	help
+	 Allow PVS level to be shown in Boeffla-Config app
+		
 endif
