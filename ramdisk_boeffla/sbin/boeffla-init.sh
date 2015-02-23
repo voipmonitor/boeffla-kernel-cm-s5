@@ -72,6 +72,10 @@
 	mount -o remount,commit=20,noatime $DATA_DEVICE /data
 	/sbin/busybox sync
 
+	# dynamic fsync to on
+	echo 1 > /sys/kernel/dyn_fsync/Dyn_fsync_active
+	/sbin/busybox sync
+
 	echo $(date) Boeffla-Kernel default settings 1 applied >> $BOEFFLA_LOGFILE
 
 # init.d support (enabler only to be considered for CM based roms)
