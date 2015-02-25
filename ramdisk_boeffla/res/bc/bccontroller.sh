@@ -15,8 +15,8 @@ KERNEL_SPECS="g900f;cm;cm12.0;http://boeffla.df-kunde.de/sgs5/boeffla-kernel-cm/
 
 # kernel features 
 # (1=enable-busybox,2=enable-frandom,3=wipe-cache,4=disable-zram-control)
-# (5=enable-default-zram-control)
-KERNEL_FEATURES="-3-"
+# (5=enable-default-zram-control,6=enable-selinux-control)
+KERNEL_FEATURES="-3-6-"
 
 # path to kernel libraries
 LIBPATH="/system/lib/modules"
