@@ -19,9 +19,12 @@
 	BOEFFLA_DATA_PATH="$SD_PATH/boeffla-kernel-data"
 	BOEFFLA_LOGFILE="$BOEFFLA_DATA_PATH/boeffla-kernel.log"
 	BOEFFLA_STARTCONFIG="/data/.boeffla/startconfig"
+	BOEFFLA_STARTCONFIG_EARLY="/data/.boeffla/startconfig_early"
 	BOEFFLA_STARTCONFIG_DONE="/data/.boeffla/startconfig_done"
 	CWM_RESET_ZIP="boeffla-config-reset-v4.zip"
 	INITD_ENABLER="/data/.boeffla/enable-initd"
+	BUSYBOX_ENABLER="/data/.boeffla/enable-busybox"
+	FRANDOM_ENABLER="/data/.boeffla/enable-frandom"
 
 # If not yet existing, create a boeffla-kernel-data folder on sdcard 
 # which is used for many purposes,
@@ -63,6 +66,10 @@
 # remove any obsolete Boeffla-Config V2 startconfig done file
 	/sbin/busybox rm -f $BOEFFLA_STARTCONFIG_DONE
 
+# remove not used configuration files for frandom and busybox
+	/sbin/busybox rm -f $BUSYBOX_ENABLER
+	/sbin/busybox rm -f $FRANDOM_ENABLER
+	
 # Apply Boeffla-Kernel default settings 1
 
 	# Ext4 tweaks default to on
@@ -77,6 +84,15 @@
 	/sbin/busybox sync
 
 	echo $(date) Boeffla-Kernel default settings 1 applied >> $BOEFFLA_LOGFILE
+
+# Execute early startconfig placed by Boeffla-Config V2 app, if there is one
+	if [ -f $BOEFFLA_STARTCONFIG_EARLY ]; then
+		echo $(date) "Early startup configuration found"  >> $BOEFFLA_LOGFILE
+		. $BOEFFLA_STARTCONFIG_EARLY
+		echo $(date) Early startup configuration applied  >> $BOEFFLA_LOGFILE
+	else
+		echo $(date) "No early startup configuration found"  >> $BOEFFLA_LOGFILE
+	fi
 
 # init.d support (enabler only to be considered for CM based roms)
 # (zipalign scripts will not be executed as only exception)
@@ -95,7 +111,7 @@
 	else
 		echo $(date) init.d script handling by kernel disabled >> $BOEFFLA_LOGFILE
 	fi
-	
+
 # Now wait for the rom to finish booting up
 # (by checking for the android acore process)
 	echo $(date) Checking for Rom boot trigger... >> $BOEFFLA_LOGFILE
@@ -103,7 +119,7 @@
 	  /sbin/busybox sleep 1
 	done
 	echo $(date) Rom boot trigger detected, waiting a few more seconds... >> $BOEFFLA_LOGFILE
-	/sbin/busybox sleep 8
+	/sbin/busybox sleep 10
 
 # Apply Boeffla-Kernel default settings 2
 
@@ -123,11 +139,10 @@
 	cat /sys/class/kgsl/kgsl-3d0/devfreq/governor > /dev/bk_orig_gpu_governor
 	cat /sys/class/kgsl/kgsl-3d0/min_pwrlevel > /dev/bk_orig_min_pwrlevel
 	cat /sys/class/kgsl/kgsl-3d0/max_pwrlevel > /dev/bk_orig_max_pwrlevel
-	
-	# if there is a startconfig placed by Boeffla-Config V2 app, execute it;
+
+	# if there is a startconfig placed by Boeffla-Config V2 app, execute it
 	if [ -f $BOEFFLA_STARTCONFIG ]; then
-		echo $(date) "Startup configuration found:"  >> $BOEFFLA_LOGFILE
-		cat $BOEFFLA_STARTCONFIG >> $BOEFFLA_LOGFILE
+		echo $(date) "Startup configuration found"  >> $BOEFFLA_LOGFILE
 		. $BOEFFLA_STARTCONFIG
 		echo $(date) Startup configuration applied  >> $BOEFFLA_LOGFILE
 	else
@@ -197,17 +212,23 @@
 		echo $(date) EFS Backup: Not found, now created one >> $BOEFFLA_LOGFILE
 	fi
 
-# Copy reset cwm zip in boeffla-kernel-data folder
+# Copy reset recovery zip in boeffla-kernel-data folder, delete older versions first
 	CWM_RESET_ZIP_SOURCE="/res/misc/$CWM_RESET_ZIP"
 	CWM_RESET_ZIP_TARGET="$BOEFFLA_DATA_PATH/$CWM_RESET_ZIP"
 
 	if [ ! -f $CWM_RESET_ZIP_TARGET ]; then
 
+		/sbin/busybox rm $BOEFFLA_DATA_PATH/boeffla-config-reset*
 		/sbin/busybox cp $CWM_RESET_ZIP_SOURCE $CWM_RESET_ZIP_TARGET
 		/sbin/busybox chmod 666 $CWM_RESET_ZIP_TARGET
 
-		echo $(date) CWM reset zip copied >> $BOEFFLA_LOGFILE
+		echo $(date) Recovery reset zip copied >> $BOEFFLA_LOGFILE
 	fi
 
 # Finished
 	echo $(date) Boeffla-Kernel initialisation completed >> $BOEFFLA_LOGFILE
+	echo $(date) "Loaded early startconfig was:" >> $BOEFFLA_LOGFILE
+	cat $BOEFFLA_STARTCONFIG_EARLY >> $BOEFFLA_LOGFILE
+	echo $(date) "Loaded startconfig was:" >> $BOEFFLA_LOGFILE
+	cat $BOEFFLA_STARTCONFIG >> $BOEFFLA_LOGFILE
+	echo $(date) End of kernel startup logfile >> $BOEFFLA_LOGFILE
