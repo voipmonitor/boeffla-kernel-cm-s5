@@ -620,8 +620,8 @@
  *
  * Version 1.0 beta6a
  *
- *	- Replaced dirty backlight-hook by proper lcd notifier callback, so it should run on any
- *    msm8974 based platform now (as long as the lcd_notifier change is implemented)
+ *	- replaced dirty backlight-hook by proper lcd notifier callback, so it should run on any
+ *	  msm8974 based platform now (as long as the lcd_notifier change is implemented)
  *
  * ---------------------------------------------------------------------------------------------------------------------------------------------------------
  * -                                                                                                                                                       -
@@ -664,7 +664,7 @@
 #endif
 
 #define ENABLE_INPUTBOOSTER			// ZZ: enable/disable inputbooster support
-#define ENABLE_WORK_RESTARTLOOP			// ZZ: enable/disable restart loop for touchboost
+#define ENABLE_WORK_RESTARTLOOP		// ZZ: enable/disable restart loop for touchboost
 
 #ifdef ENABLE_INPUTBOOSTER
 #include <linux/slab.h>
@@ -693,9 +693,6 @@ static char custom_profile[20] = "custom";			// ZZ: name to show in sysfs if any
 
 // ff: allows tuneables to be tweaked without reverting to "custom" profile
 #define DEF_PROFILE_STICKY_MODE				(1)
-
-// AP: configure if lcd_notifier should be used
-#define USE_LCD_NOTIFIER
 
 // Yank: enable/disable debugging code
 //#define ZZMOOVE_DEBUG
@@ -7644,9 +7641,6 @@ void zzmoove_suspend(void)
 	flg_ctr_inputbooster_typingbooster = 0;
 	scaling_up_block_cycles_count = 0;
 }
-#if defined(USE_LCD_NOTIFIER)
-EXPORT_SYMBOL(zzmoove_suspend);
-#endif
 
 #if defined(CONFIG_HAS_EARLYSUSPEND)
 static void __cpuinit powersave_late_resume(struct early_suspend *handler)
@@ -7719,9 +7713,6 @@ void zzmoove_resume(void)
 	else
 	    scaling_mode_down = dbs_tuners_ins.fast_scaling_down;		// Yank: fast scaling up only
 }
-#if defined(USE_LCD_NOTIFIER)
-EXPORT_SYMBOL(zzmoove_resume);
-#endif
 
 #if defined(CONFIG_HAS_EARLYSUSPEND)
 static struct early_suspend __refdata _powersave_early_suspend = {
@@ -7976,22 +7967,22 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 static int zzmoove_lcd_notifier_callback(struct notifier_block *this,
 								unsigned long event, void *data)
 {
-	switch (event) 
+	switch (event)
 	{
 		case LCD_EVENT_OFF_END:
 			zzmoove_suspend();
 #ifdef ZZMOOVE_DEBUG
 			pr_info("[zzmoove/lcd_notifier] Screen switched off.\n");
-#endif			
+#endif
 			break;
-			
+
 		case LCD_EVENT_ON_START:
 			zzmoove_resume();
 #ifdef ZZMOOVE_DEBUG
 			pr_info("[zzmoove/lcd_notifier] Screen switched on.\n");
-#endif			
+#endif
 			break;
-			
+
 		default:
 			break;
 	}
