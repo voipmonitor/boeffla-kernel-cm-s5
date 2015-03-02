@@ -89,6 +89,12 @@
  *  - added hotplug up/down multiplier tuneables to all profiles
  *  - added hotplug max/min/lock tuneables to all profiles
  *
+ * Version 0.3 beta6 OPO for governor Version 1.0 beta6a (Andip71 aka Lord Boeffla)
+ *
+ *  - changed macro naming from CONFIG_BACKLIGHT_EXT_CONTROL to USE_LCD_NOTIFIER accordingly to
+ *    governor version 1.0 beta6a
+ *  - corrected version information in profiles file version variable
+ *
  * currently available profiles by ZaneZam and Yank555:
  * ------------------------------------------------------------------------------------------------------------------------------------------
  * -  (1)'def'    -> Default              -> will set governor defaults                                                                     -
@@ -123,7 +129,7 @@
  */
 
 // NOTE: profile values in this version are mainly for One Plus One devices but might be compatible with other qualcomm devices too!
-static char profiles_file_version[20] = "0.3 beta3 OPO";
+static char profiles_file_version[20] = "0.3 beta6 OPO";
 #define PROFILE_TABLE_END ~1
 #define END_OF_PROFILES "end"
 
