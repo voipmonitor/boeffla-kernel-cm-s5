@@ -120,7 +120,7 @@
 	  /sbin/busybox sleep 1
 	done
 	echo $(date) Rom boot trigger detected, waiting a few more seconds... >> $BOEFFLA_LOGFILE
-	/sbin/busybox sleep 10
+	/sbin/busybox sleep 15
 
 # Apply Boeffla-Kernel default settings 2
 
@@ -135,6 +135,7 @@
 	cat /sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table > /dev/bk_orig_cpu_voltage
 	cat /sys/kernel/charge_levels/charge_level_ac > /dev/bk_orig_charge_level_ac
 	cat /sys/kernel/charge_levels/charge_level_usb > /dev/bk_orig_charge_level_usb
+	cat /sys/kernel/charge_levels/charge_level_wireless > /dev/bk_orig_charge_level_wireless
 	cat /sys/module/lowmemorykiller/parameters/minfree > /dev/bk_orig_minfree
 	/sbin/busybox lsmod > /dev/bk_orig_modules
 	cat /sys/class/kgsl/kgsl-3d0/devfreq/governor > /dev/bk_orig_gpu_governor
