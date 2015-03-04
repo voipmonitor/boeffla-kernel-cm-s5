@@ -11,20 +11,8 @@ diff --git a/init.rc b/init.rc
 index 32d33d8..9f5807f 100755
 --- a/init.rc
 +++ b/init.rc
-@@ -349,9 +349,9 @@ on boot
-     write /proc/sys/vm/overcommit_memory 1
-     write /proc/sys/vm/min_free_order_shift 4
-     chown root system /sys/module/lowmemorykiller/parameters/adj
--    chmod 0220 /sys/module/lowmemorykiller/parameters/adj
-+    chmod 0660 /sys/module/lowmemorykiller/parameters/adj
-     chown root system /sys/module/lowmemorykiller/parameters/minfree
--    chmod 0220 /sys/module/lowmemorykiller/parameters/minfree
-+    chmod 0660 /sys/module/lowmemorykiller/parameters/minfree
- 
-     # Tweak background writeout
-     write /proc/sys/vm/dirty_expire_centisecs 200
-@@ -655,3 +655,10 @@ service pre-recovery /system/bin/uncrypt
-     class main
+@@ -610,3 +610,10 @@ service mdnsd /system/bin/mdnsd
+     socket mdnsd stream 0660 mdnsr inet
      disabled
      oneshot
 +

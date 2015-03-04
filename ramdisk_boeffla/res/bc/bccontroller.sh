@@ -1,7 +1,7 @@
 # Boeffla-Config controller interface
 #
 # *************************************
-# SM-G900F Samsung CM12 version
+# SM-G900F Samsung CM11 version
 #
 # V0.1
 # *************************************
@@ -11,12 +11,12 @@
 # ********************************
 
 # kernel specification (hardware; type; target; url)
-KERNEL_SPECS="g900f;cm;cm12.0;http://boeffla.df-kunde.de/sgs5/boeffla-kernel-cm/"
+KERNEL_SPECS="g900f;cm;cm11.0;http://boeffla.df-kunde.de/sgs5/boeffla-kernel-cm/"
 
 # kernel features 
 # (1=enable-busybox,2=enable-frandom,3=wipe-cache,4=disable-zram-control)
 # (5=enable-default-zram-control,6=enable-selinux-switch, 7=enable-selinux-control)
-KERNEL_FEATURES="-3-6-7-"
+KERNEL_FEATURES="-3-"
 
 # path to kernel libraries
 LIBPATH="/system/lib/modules"

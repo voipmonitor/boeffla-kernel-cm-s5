@@ -1,7 +1,7 @@
 #!/system/bin/sh
 
 # ************************************
-# SM-G900F Samsung CM12 version
+# SM-G900F Samsung CM11 version
 #
 # V0.1
 # ************************************
@@ -25,7 +25,6 @@
 	INITD_ENABLER="/data/.boeffla/enable-initd"
 	BUSYBOX_ENABLER="/data/.boeffla/enable-busybox"
 	FRANDOM_ENABLER="/data/.boeffla/enable-frandom"
-	PERMISSIVE_ENABLER="/data/.boeffla/enable-permissive"
 
 # If not yet existing, create a boeffla-kernel-data folder on sdcard 
 # which is used for many purposes,
@@ -225,19 +224,6 @@
 		/sbin/busybox chmod 666 $CWM_RESET_ZIP_TARGET
 
 		echo $(date) Recovery reset zip copied >> $BOEFFLA_LOGFILE
-	fi
-
-# If not explicitely configured to permissive, set SELinux to enforcing and restart mpdecision
-	if [ ! -f $PERMISSIVE_ENABLER ]; then
-		echo "1" > /sys/fs/selinux/enforce
-
-		stop mpdecision
-		/sbin/busybox sleep 0.5
-		start mpdecision
-
-		echo $(date) "SELinux: enforcing" >> $BOEFFLA_LOGFILE
-	else
-		echo $(date) "SELinux: permissive" >> $BOEFFLA_LOGFILE
 	fi
 
 # Finished
