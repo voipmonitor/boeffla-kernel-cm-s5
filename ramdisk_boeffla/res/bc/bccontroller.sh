@@ -1,7 +1,7 @@
 # Boeffla-Config controller interface
 #
 # *************************************
-# SM-G900F Samsung CM12 version
+# SM-G900F CM12 version
 #
 # V0.1
 # *************************************
@@ -977,7 +977,7 @@ if [ "apply_system_tweaks" == "$1" ]; then
 		echo "200" > /proc/sys/vm/dirty_expire_centisecs
 		echo "20" > /proc/sys/vm/dirty_ratio
 		echo "500" > /proc/sys/vm/dirty_writeback_centisecs
-		echo "3207" > /proc/sys/vm/min_free_kbytes
+		echo "3008" > /proc/sys/vm/min_free_kbytes
 		echo "60" > /proc/sys/vm/swappiness
 		echo "100" > /proc/sys/vm/vfs_cache_pressure
 		echo "0" > /proc/sys/vm/drop_caches
