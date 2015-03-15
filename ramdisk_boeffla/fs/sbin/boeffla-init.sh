@@ -120,7 +120,7 @@
 	  /sbin/busybox sleep 1
 	done
 	echo $(date) Rom boot trigger detected, waiting a few more seconds... >> $BOEFFLA_LOGFILE
-	/sbin/busybox sleep 15
+	/sbin/busybox sleep 20
 
 # Apply Boeffla-Kernel default settings 2
 
