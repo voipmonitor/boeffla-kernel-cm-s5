@@ -65,4 +65,14 @@ static inline int qpnp_pon_trigger_config(enum pon_trigger_source pon_src,
 }
 #endif
 
+struct qpnp_pon {
+	struct spmi_device *spmi;
+	struct input_dev *pon_input;
+	struct qpnp_pon_config *pon_cfg;
+	int num_pon_config;
+	int powerkey_state;
+	u16 base;
+	struct delayed_work bark_work;
+};
+
 #endif
