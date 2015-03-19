@@ -108,7 +108,7 @@ step0_copy_code()
 	cp -r $SOURCE_PATH/* $BUILD_PATH
 
 	# Replace version information in mkcompile_h with the one from x-settings.sh
-	sed "s/\`echo \$LINUX_COMPILE_BY | \$UTS_TRUNCATE\`/Boeffla-Kernel-$BOEFFLA_VERSION-$BOEFFLA_DATE/g" -i $BUILD_PATH/scripts/mkcompile_h
+	sed "s/\`echo \$LINUX_COMPILE_BY | \$UTS_TRUNCATE\`/Boeffla-Kernel-$BOEFFLA_VERSION-$BOEFFLA_DATE-[supported-by-www.hubo.in]/g" -i $BUILD_PATH/scripts/mkcompile_h
 	sed "s/\`echo \$LINUX_COMPILE_HOST | \$UTS_TRUNCATE\`/andip71/g" -i $BUILD_PATH/scripts/mkcompile_h
 }
 
