@@ -10,7 +10,7 @@
 # Parameters to be configured manually
 #######################################
 
-BOEFFLA_VERSION="1.0-test-CM12-g900f"
+BOEFFLA_VERSION="1.0-test-CM12.1-g900f"
 EXTENDED_CMDLINE="androidboot.selinux=permissive"
 
 TOOLCHAIN="/opt/toolchains/arm-eabi-4.8/bin/arm-eabi-"
