@@ -340,9 +340,9 @@ fi
 
 if [ "param_led" == "$1" ]; then
 	# LED speed min/max/steps
-	echo "0;12;1;"
+	echo "0;15;1;"
 	# LED brightness min/max/steps
-	echo "0;100;5"
+	echo "0;130;5"
 	exit 0
 fi
 
